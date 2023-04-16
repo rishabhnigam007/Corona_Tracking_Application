@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <title>Corona Tracking Application</title>
+    <style>
+        .blink {
+            animation: blinker 2s linear infinite;
+        }
+
+        @keyframes blinker {
+            50% {
+                opacity: 0;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+<main class="container">
+    <div class="card">
+        <div class="card-header rounded-3 bg-dark text-light text-center">
+            <h2 class="display-4">Corona Tracking Portal</h2>
+            <p class="lead">This application lists the current number of cases across the globe</p>
+        </div>
+        <div class="jumbotron bg-light">
+            <h3 class="display-5 btn btn-danger blink" th:text="${totalReportedCases}"></h3>
+            <p class="lead">Total cases reported as of today</p>
+            <hr class="my-2">
+            <p>New cases reported since previous day: <span th:text="${totalNewCases}"></span><span
+                    class="visually-hidden spinner-grow text-success" role="status"></span></p>
+        </div>
+    </div>
+    <div class="card">
+        <div class="table-responsive" style="max-height: 400px; overflow-y: scroll; width: 100%;">
+            <table class="table table-hover" style="max-height: 400px; overflow-y: scroll; width: 100%;">
+                <thead class="thead-dark sticky-top">
+                <tr>
+                    <th>State</th>
+                    <th>Country</th>
+                    <th>Total cases reported</th>
+                    <th>Changes since last day</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="locationStat : ${locationStats}">
+                    <td th:text="${locationStat.state}"></td>
+                    <td th:text="${locationStat.country}"></td>
+                    <td th:text="${locationStat.latestTotalCases}"></td>
+                    <td th:text="${locationStat.diffFromPrevDay}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+<footer class="p-3 bg-dark text-light text-center">
+    <p>&copy; 2023 Corona Tracking Application</p>
+</footer>
+</body>
+
+</html>
